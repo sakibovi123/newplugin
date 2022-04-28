@@ -12,99 +12,111 @@ Author URI: http://ma.tt/
 defined("ABSPATH") or die("Dont !");
 
 
-class Newclass{
-    // methods
+if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
+	require_once dirname( __FILE__ ) . '/vendor/autoload.php';
+}
 
-    function __construct() {
-        add_action("init", array(
-            $this, "custom_post_type"
-        ));
+define( 'PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define( 'PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
-        $this->plugin = plugin_basename(__FILE__);
-    }
+if ( class_exists( 'Inc\\Init' ) ) {
+	Inc\Init::register_services();
+}
 
-    public $plugin;
 
-    // registering style and scripts
-    function register()
-    {
-        add_action( "admin_enqueue_scripts", array( $this, "enqueue" ) );
-        // adding settings page 
-        add_action( "admin_menu", array( $this, "add_settings_page" ) );
-        // adding slug redirection
+// class Newclass{
+//     // methods
+
+//     function __construct() {
+//         add_action("init", array(
+//             $this, "custom_post_type"
+//         ));
+
+//         $this->plugin = plugin_basename(__FILE__);
+//     }
+
+//     public $plugin;
+
+//     // registering style and scripts
+//     function register()
+//     {
+//         add_action( "admin_enqueue_scripts", array( $this, "enqueue" ) );
+//         // adding settings page 
+//         add_action( "admin_menu", array( $this, "add_settings_page" ) );
+//         // adding slug redirection
         
-        add_filter( "plugin_action_links_$this->plugin", array($this, "settings_link") );
-        echo $this->plugin;
-    }
+//         add_filter( "plugin_action_links_$this->plugin", array($this, "settings_link") );
+//         echo $this->plugin;
+//     }
 
-    // adding custom slug for settings or for all custom page
-    public function settings_link($links)
-    {
-        // adding custom link for settings
-        $settings_link = '<a href="admin.php">Settings</a>';
-        array_push($links, $settings_link);
-        return $links;
+//     // adding custom slug for settings or for all custom page
+//     public function settings_link($links)
+//     {
+//         // adding custom link for settings
+//         $settings_link = '<a href="admin.php">Settings</a>';
+//         array_push($links, $settings_link);
+//         return $links;
 
-    }
+//     }
 
-    // adding function for settings page
-    public function add_settings_page()
-    {
-        // parameters
-        // page_title, menu_title, capablity=>manage_options, menu_slug, 'template', 'icons', position
-        add_menu_page(
-            "New Plugin",
-            "NewPlugin",
-            "manage_options",
-            "new plugin",
-            array( 
-                $this, "admin_index"
-            ),
-            "dashicons-store", 110
-        );
-    }
+//     // adding function for settings page
+//     public function add_settings_page()
+//     {
+//         // parameters
+//         // page_title, menu_title, capablity=>manage_options, menu_slug, 'template', 'icons', position
+//         add_menu_page(
+//             "New Plugin",
+//             "NewPlugin",
+//             "manage_options",
+//             "new plugin",
+//             array( 
+//                 $this, "admin_index"
+//             ),
+//             "dashicons-store", 110
+//         );
+//     }
 
-    public function admin_index(){
-        // template
-        require_once plugin_dir_path(__FILE__) . "templates/admin.php";
-    }
+//     public function admin_index(){
+//         // template
+//         require_once plugin_dir_path(__FILE__) . "templates/admin.php";
+//     }
 
-    function activating_plugin() {
-        $this->custom_post_type();
-        flush_rewrite_rules();
-    }
+//     function activating_plugin() {
+//         $this->custom_post_type();
+//         flush_rewrite_rules();
+//     }
 
-    function deactivating_plugin() {
-        flush_rewrite_rules();
-    }
+//     function deactivating_plugin() {
+//         flush_rewrite_rules();
+//     }
 
-    function uninstalling_plugin() {
+//     function uninstalling_plugin() {
 
-    }
+//     }
 
-    function custom_post_type(){
-        register_post_type("Book", [
-            "public" => true,
-            "label" => "Books"
-        ]);
-    }
+//     function custom_post_type(){
+//         register_post_type("Book", [
+//             "public" => true,
+//             "label" => "Books"
+//         ]);
+//     }
 
-    function enqueue()
-    {
-        // css files
-        wp_enqueue_style(
-            "mypluginstyle", plugins_url("/assets/css/my_style.css", __FILE__)
-        );
-        // Script
-        wp_enqueue_script("myscript", plugins_url("/assets/js/my_script.js", __FILE__));
-    }
+//     function enqueue()
+//     {
+//         // css files
+//         wp_enqueue_style(
+//             "mypluginstyle", plugins_url("/assets/css/my_style.css", __FILE__)
+//         );
+//         // Script
+//         wp_enqueue_script("myscript", plugins_url("/assets/js/my_script.js", __FILE__));
+//     }
 
-}
+// }
 
-if ( !class_exists("NewPlugin") ){
-    $newplugin = new Newclass();
-    $newplugin->register();
-}
+// if ( !class_exists("NewPlugin") ){
+//     $newplugin = new Newclass();
+//     $newplugin->register();
+// }
 
 
 // activate

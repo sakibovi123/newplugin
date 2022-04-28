@@ -1,0 +1,17 @@
+{
+    "name": "mr.sakib/newplugin",
+    "description": "Practice Plugin",
+    "type": "project",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "sakibovi123",
+            "email": "sakibovi321321@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {"Inc\\": "./inc"}
+    }
+}
